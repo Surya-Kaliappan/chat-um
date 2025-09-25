@@ -72,7 +72,6 @@ const Profile = () => {
 
     const handleFileInputClick = () => {
         fileInputRef.current.click();
-        console(fileInputRef);
     }
 
     const handleImageChange = async (event) => {
@@ -96,7 +95,6 @@ const Profile = () => {
 
     const handleDeleteImage = async () => {
         try{
-            console.log("Clicked");
             const response = await apiClient.delete(REMOVE_PROFILE_IMAGE_ROUTE, {withCredentials: true});
             if(response.status === 200){
                 setUserInfo({ ...userInfo, image: null});
