@@ -4,6 +4,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import authRoutes from "./routes/AuthRoutes.js";
+import contactRoutes from "./routes/ContactRoutes.js";
+import setupSocket from "./socket.js";
 
 dotenv.config();
 
@@ -23,10 +25,13 @@ app.use(cookieParser());  // getting cookies from frontend
 app.use(express.json());  // getting payload from the request
 
 app.use("/api/auth", authRoutes);
+app.use("/api/contacts", contactRoutes)
 
 const server = app.listen(port, () => {
     console.log(`Server is running.. http://localhost:${port}`);
 });
+
+setupSocket(server);
 
 mongoose.connect(databaseURL)   // Connect to the Database
 .then(() => console.log("Database connected")).catch(err => console.log(err.message));

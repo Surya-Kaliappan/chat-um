@@ -31,7 +31,6 @@ export const signup = async (request, response, next) => {
 
     } catch(error) {
         console.log({error});
-        console.log("Here it is");
         return response.status(500).send("Internal Server Error");
     }
 };
@@ -50,7 +49,6 @@ export const login = async (request, response, nex) => {
         if(!auth){
             return response.status(400).send("Password is incorrect.");
         }
-
         response.cookie("jwt", createToken(email, user.id), {
             maxAge,
             secure: true,
@@ -167,4 +165,13 @@ export const removeProfileImage = async (request, response, next) => {
     } catch (error) {
         console.log({error});
     }
-}
+};
+
+export const logout = async (request, response, next) => {
+    try{
+        response.cookie("jwt", "", {maxAge: 1, secure: true, sameSite:"None"})
+        return response.status(200).send("Logout Successfully");
+    } catch (error) {
+        return response.status(500).send("Internal Server Error");
+    }
+};
