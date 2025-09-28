@@ -30,6 +30,8 @@ export const SocketProvider = ({children}) => {
                 if(selectedChatType!==undefined && (selectedChatData._id === message.sender._id || selectedChatData._id === message.recipient._id)){
                     addMessage(message);
                 }
+
+                console.log(message);
             };
 
             socket.current.on("recieveMessage", handleRecieveMessage);
