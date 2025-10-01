@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/UserModel.js";
-import { compare } from "bcrypt";
+import bcrypt from "bcrypt";
 import { renameSync, unlinkSync } from "fs";
 
 const maxAge = 3 * 24 * 60 * 60 * 1000;  // 3 Days of Expire
@@ -15,7 +15,8 @@ export const signup = async (request, response, next) => {
         if(!email || !password){
             return response.status(400).send("Email and Password is required.");
         }
-        const user = await User.create({email, password});
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await User.create({email, password: hashedPassword});
         response.cookie("jwt", createToken(email, user.id), {
             maxAge, 
             secure: true,
@@ -45,7 +46,7 @@ export const login = async (request, response, nex) => {
         if(!user){
             return response.status(404).send("User with the given email not found.");
         }
-        const auth = await compare(password, user.password);
+        const auth = await bcrypt.compare(password, user.password);
         if(!auth){
             return response.status(400).send("Password is incorrect.");
         }
@@ -96,7 +97,6 @@ export const getUserInfo = async (request, response, next) => {
 export const updateProfile = async (request, response, next) => {
     try {
         const {userId} = request;
-        console.log(userId);
         const {firstName, lastName, color} = request.body;
         if(!firstName || !lastName){
             return response.status(400).send("Firstname, Lastname and color is required.");

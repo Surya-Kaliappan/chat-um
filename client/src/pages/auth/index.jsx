@@ -48,16 +48,20 @@ const Auth = () => {
 
     const handleLogin = async () => {
         if(validateLogin()) {
-            const response = await apiClient.post(LOGIN_ROUTE, 
-                {email,password}, 
-                {withCredentials: true}
-            );
-            if(response.data.user.id){
-                setUserInfo(response.data.user);
-                if(response.data.user.profileSetup) navigate("/chat");
-                else navigate("/profile");
+            try{
+                const response = await apiClient.post(LOGIN_ROUTE, 
+                    {email,password}, 
+                    {withCredentials: true}
+                );
+                if(response.data.user.id){
+                    setUserInfo(response.data.user);
+                    if(response.data.user.profileSetup) navigate("/chat");
+                    else navigate("/profile");
+                }
+            } catch (error) {
+                console.log({error});
+                toast.error("Invalid Credentail");
             }
-            console.log({response});
         }
     };
 
@@ -71,7 +75,6 @@ const Auth = () => {
                 setUserInfo(response.data.user);
                 navigate("/profile");
             }
-            console.log({response});
         }
     };
 
