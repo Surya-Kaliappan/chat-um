@@ -58,8 +58,12 @@ const Auth = () => {
                     else navigate("/profile");
                 }
             } catch (error) {
-                console.log({error});
+                console.log(error.code);
+                if(error.code === "ERR_NETWORK"){
+                    toast.error("Can't reach Server");
+                }else{
                 toast.error("Invalid Credentail");
+                }
             }
         }
     };

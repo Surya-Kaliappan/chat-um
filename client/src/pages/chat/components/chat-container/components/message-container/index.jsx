@@ -113,13 +113,13 @@ const MessageContainer = () => {
         return(
             <div className={`${message.sender === selectedChatData._id ? "text-left":"text-right"}`}>
                 {message.messageType === "text" && (
-                    <div className={`${message.sender !== selectedChatData._id ? "bg-[#0c6aeb]/30 text-white/90 border-[#0c6aeb]/80 text-left rounded-bl-md" : "bg-[#f59c0d]/30 text-white/80 border-[#f59c0d]/80 rounded-br-md"} text-sm sm:text-[16px] border inline-block px-3 py-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-3 sm:ml-6 max-w-[75%] sm:max-w-[45%] break-words whitespace-pre-line`}>
+                    <div className={`${message.sender !== selectedChatData._id ? "bg-[#0c6aeb]/30 text-white/90 border-[#0c6aeb]/80 text-left rounded-bl-md" : "bg-[#f59c0d]/30 text-white/80 border-[#f59c0d]/80 rounded-br-md"} text-sm sm:text-[16px] border inline-block px-3 py-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-3 sm:ml-6 max-w-[80%] sm:max-w-[45%] break-words whitespace-pre-line`}>
                         {message.content}
                     </div>
                 )}
                 {
                     message.messageType === "file" && (
-                    <div className={`${message.sender !== selectedChatData._id ? "bg-[#0c6aeb]/30 text-[#0c6aeb]/90 border-[#0c6aeb]/50 text-left rounded-bl-md" : "bg-[#f59c0d]/30 text-white/80 border-[#f59c0d]/80 rounded-br-md"} border inline-block p-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-6 max-w-[80%] break-words`}>
+                    <div className={`${message.sender !== selectedChatData._id ? "bg-[#0c6aeb]/30 text-[#0c6aeb]/90 border-[#0c6aeb]/50 text-left rounded-bl-md" : "bg-[#f59c0d]/30 text-white/80 border-[#f59c0d]/80 rounded-br-md"} border inline-block p-2 rounded-tl-md rounded-tr-md my-1 mt-2 ml-3 sm:ml-6 max-w-[80%] break-words`}>
                         {checkIfImage(message.fileUrl) ? 
                         (<div className="cursor-pointer" 
                         onClick={() => {
@@ -128,12 +128,12 @@ const MessageContainer = () => {
                         }}>
                             <img src={`${HOST}/${message.fileUrl}`} height={300} width={300} />
                         </div>) : (<div className="flex items-center justify-center gap-4">
-                            <span className="text-white/80 text-3xl bg-black/20 rounded-full p-3">
+                            <span className="text-white/80 text-md sm:text-3xl bg-black/20 rounded-full p-3">
                                 <MdFolderZip />
                             </span>
-                            <span>{message.fileUrl.split("/").pop()}</span>
+                            <span className="text-sm sm:text-[16px]">{message.fileUrl.split("/").pop()}</span>
                             <span 
-                                className="bg-black/20 p-3 text-2xl rounded-full hover:bg-black/50 cursor-pointer transition-all duration-300"
+                                className="bg-black/20 p-3 text-md sm:text-2xl rounded-full hover:bg-black/50 cursor-pointer transition-all duration-300"
                                 onClick={() => downloadFile(message.fileUrl)}
                             >
                                 <IoMdArrowRoundDown />
