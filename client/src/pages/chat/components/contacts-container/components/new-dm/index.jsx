@@ -1,6 +1,6 @@
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useState } from "react";
-import { FaPlus } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input";
 import Lottie from "react-lottie";
@@ -42,20 +42,20 @@ const NewDM = () => {
         <>
             <Tooltip>
                 <TooltipTrigger>
-                    <FaPlus className="text-neutral-400 font-light text-opacity-90 text-start hover:text-neutral-100 cursor-pointer transition-all duration-300" 
+                    <FaSearch className="text-neutral-400 font-light text-opacity-90 text-start hover:text-neutral-100 cursor-pointer transition-all duration-300" 
                         onClick={() => setOpenNewContactModal(true)}
                     />
                 </TooltipTrigger>
                 <TooltipContent
                     className="border-none p-3 text-white"
                 >
-                    <p>Select New Contact</p>
+                    <p>Select Contact</p>
                 </TooltipContent>
             </Tooltip>
             <Dialog open={openNewContactModal} onOpenChange={setOpenNewContactModal}>
                 <DialogContent className="bg-[#181920] border-none text-white w-[400px] h-[400px] flex flex-col">
                     <DialogHeader>
-                    <DialogTitle>Please select a contact</DialogTitle>
+                        <DialogTitle>Please select a contact</DialogTitle>
                     <DialogDescription></DialogDescription>
                     </DialogHeader>
                     <div>
@@ -103,8 +103,8 @@ const NewDM = () => {
                                 />
                                 <div className="text-capcity-80 text-white flex flex-col gap-5 items-center mt-5 lg:text-2xl text-xl transition-all duration-300 text-center">
                                     <h3 className="poppins-medium">
-                                        Hi<span className="text-purple-500">!</span> Search new
-                                        <span className="text-purple-500"> Contact</span>
+                                        <span className="text-[#0c6aeb]">Search</span>
+                                        <span className="text-[#f59c0d]"> Contact</span>
 
                                     </h3>
                                 </div>

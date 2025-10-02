@@ -45,7 +45,7 @@ const ProfileInfo = () => {
             <div className="flex gap-5">
                 <Tooltip>
                     <TooltipTrigger>
-                        <FiEdit2 className="text-purple-500 text-xl font-medium cursor-pointer" onClick={() => navigate("/profile")}/>
+                        <FiEdit2 className="text-[#f58e0d] text-xl font-medium cursor-pointer" onClick={() => navigate("/profile")}/>
                     </TooltipTrigger>
                     <TooltipContent className="border-none text-white">
                         <p>Edit Profile</p>

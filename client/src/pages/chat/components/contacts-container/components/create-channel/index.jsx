@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import MultipleSelector from "@/components/ui/multipleselect";
 
 const CreateChannel = () => {
-    const {setSelectedChatType, setSelectedChatData, addChannels} = useAppStore();
+    const {addChannels} = useAppStore();
     const [newChannelModal, setNewChannelModal] = useState(false);
     const [allContacts, setAllContacts] = useState([]);
     const [selectedContacts, setSelectedContacts] = useState([]);
@@ -64,10 +64,10 @@ const CreateChannel = () => {
                 </TooltipContent>
             </Tooltip>
             <Dialog open={newChannelModal} onOpenChange={setNewChannelModal}>
-                <DialogContent className="bg-[#181920] border-none text-white w-[400px] h-[400px] flex flex-col">
+                <DialogContent className="bg-[#181920] border-none text-white w-[400px] h-[400px] flex flex-col poppins-medium">
                     <DialogHeader>
-                    <DialogTitle>Fill up the details for new channel.</DialogTitle>
-                    <DialogDescription></DialogDescription>
+                    <DialogTitle>Creating New channel.</DialogTitle>
+                    <DialogDescription>Select Peoples</DialogDescription>
                     </DialogHeader>
                     <div>
                         <Input
@@ -90,7 +90,7 @@ const CreateChannel = () => {
                         />
                     </div>
                     <div>
-                        <Button className="w-full bg-purple-700 hover:bg-purple-900 transition-all duration-300" onClick={createChannel}>
+                        <Button className="w-full hover:bg-[#f59c0d]/60 bg-[#0c6aeb]/80 transition-all duration-300" onClick={createChannel}>
                             Create Channel
                         </Button>
                     </div>

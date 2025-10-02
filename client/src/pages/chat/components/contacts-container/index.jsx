@@ -35,7 +35,7 @@ const ContactsContainer = () => {
   }, [setChannels, setDirectMessagesContacts]);
 
   return(
-    <div className="relative md:w-[35vw] lg:w-[30vw] xl:w-[20vw] bg-[#1b1c24] border-r-2 border-[#2f303b] w-full">
+    <div className="relative md:w-[35vw] lg:w-[30vw] xl:w-[30vw] bg-[#1b1c24] border-r-2 border-[#2f303b] w-full">
         <div className="pt-3">
             <Logo />
         </div>
@@ -80,17 +80,17 @@ const Logo = () => {
         <path
           d="M55.5 0H77.5L58.5 32H36.5L55.5 0Z"
           className="ccustom"
-          fill="#8338ec"
+          fill="#ec9e38ff"
         ></path>{" "}
         <path
           d="M35.5 0H51.5L32.5 32H16.5L35.5 0Z"
           className="ccompli1"
-          fill="#975aed"
+          fill="#ed9f5aff"
         ></path>{" "}
         <path
           d="M19.5 0H31.5L12.5 32H0.5L19.5 0Z"
           className="ccompli2"
-          fill="#a16ee8"
+          fill="#e89f6eff"
         ></path>{" "}
       </svg>
       <span className="text-3xl font-semibold ">Chat-UM</span>

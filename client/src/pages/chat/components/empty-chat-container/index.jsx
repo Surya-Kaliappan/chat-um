@@ -12,9 +12,9 @@ const EmptyChatContaienr = () => {
             />
             <div className="text-capcity-80 text-white flex flex-col gap-5 items-center mt-10 lg:text-4xl text-3xl transition-all duration-300 text-center">
                 <h3 className="poppins-medium">
-                    Hi<span className="text-purple-500">!</span> Welcome to
-                    <span className="text-purple-500"> Chat</span> App
-                    <span className="text-purple-500">.</span>
+                    Hi<span className="text-[#f59c0d]">!</span> Welcome to
+                    <span className="text-[#0c6aeb]"> Chat</span> App
+                    <span className="text-[#f59c0d]">.</span>
 
                 </h3>
             </div>
