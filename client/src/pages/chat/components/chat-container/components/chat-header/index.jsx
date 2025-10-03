@@ -6,7 +6,7 @@ import { RiCloseFill } from 'react-icons/ri';
 
 const ChatHeader = () => {
 
-    const {closeChat, selectedChatData, selectedChatType} = useAppStore();
+    const {closeChat, selectedChatData, selectedChatType, statusMap} = useAppStore();
 
     return( 
         <div className="h-[8vh] sm:h-[10vh] border-b-2 border-[#2f303b] flex items-center justify-between pl-2 sm:pl-5">
@@ -16,7 +16,7 @@ const ChatHeader = () => {
                         <RiCloseFill className="text-3xl" />
                     </button>
                 </div>
-                <div className="flex gap-3 items-center justify-center">
+                <div className="flex gap-4 items-center justify-center">
                     <div className="h-10 w-10 sm:h-12 sm:w-12 relative">
                         { selectedChatType === "contact" ? <Avatar className="h-10 sm:h-12 w-10 sm:w-12 rounded-full overflow-hidden">
                             {selectedChatData.image ? (
@@ -30,7 +30,13 @@ const ChatHeader = () => {
                     </div>
                     <div>
                         {selectedChatType === 'channel' && selectedChatData.name}
-                        {selectedChatType === 'contact' && selectedChatData.firstName ? `${selectedChatData.firstName} ${selectedChatData.lastName}` : selectedChatData.email}
+                        {selectedChatType === 'contact' && selectedChatData.firstName 
+                            ? `${selectedChatData.firstName} ${selectedChatData.lastName}` 
+                            : selectedChatData.email
+                        }
+                        {selectedChatType === 'contact' &&
+                            <div className='text-[12px] mt-1/2'>{statusMap && statusMap[selectedChatData._id] ? `online` : `offline`}</div>
+                        }
                     </div>
                 </div>
             </div>

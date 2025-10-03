@@ -15,7 +15,7 @@ export const createChannel = async (request, response, next) => {
             return response.status(400).send("Admin user not found.");
         }
 
-        const validMembers = await User.find({_id:{$in:members}});
+        const validMembers = await User.find({_id:{$in:members}});  // checking the presence of all memebers in the database
         if(validMembers.length !== members.length){
             return response.status(400).send("Some members are not Valid users.");
         } 
@@ -33,10 +33,10 @@ export const createChannel = async (request, response, next) => {
 
 export const getUserChannels = async (request, response, next) => {
     try{
-        const userId = new mongoose.Types.ObjectId(request.userId);
+        const userId = new mongoose.Types.ObjectId(request.userId);  // store the data as ObjectId type
         const channels = await Channel.find({
             $or: [{admin: userId}, {members: userId}],
-        }).sort({updatedAt: -1});        
+        }).sort({updatedAt: -1}); // sort in descending order of time
 
         return response.status(201).json({channels});
     } catch (error) {
@@ -47,7 +47,7 @@ export const getUserChannels = async (request, response, next) => {
 
 export const getChannelMessages = async (request, response, next) => {
     try{
-        const {channelId} = request.params;
+        const {channelId} = request.params;  // getting channelId from the link(params)
         const channel = await Channel.findById(channelId).populate({
             path: "messages", 
             populate: {

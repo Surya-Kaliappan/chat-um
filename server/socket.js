@@ -14,11 +14,16 @@ const setupSocket = (server) => {
     const userSocketMap = new Map();  //keep the socket connection details
 
     const disconnect = (socket) => {
+        let disconnectedUserId = null;
         for(const [userId, socketId] of userSocketMap.entries()) {
             if(socketId === socket.id){
+                disconnectedUserId = userId;
                 userSocketMap.delete(userId);
                 break;
             }
+        }
+        if(disconnectedUserId) {
+            io.to(`status_${disconnectedUserId}`).emit('statusUpdate', {userId: disconnectedUserId, isOnline: false});
         }
         console.log(`Client Disconnected: ${socket.id}`);
     };
@@ -84,10 +89,27 @@ const setupSocket = (server) => {
 
         if(userId){
             userSocketMap.set(userId, socket.id);
+            io.to(`status_${userId}`).emit('statusUpdate', {userId, isOnline: true});
             console.log(`User connected: ${userId} with socket Id: ${socket.id}`);
         } else {
             console.log("User Id not provided during connection.");
         }
+
+        socket.on("subscribeToStatus", (userIdsToWatch) => {
+            userIdsToWatch.forEach(id => {
+                socket.join(`status_${id}`);
+
+                if(userSocketMap.has(id)){
+                    socket.emit("statusUpdate", {userId: id, isOnline: true});
+                }
+            });
+        });
+
+        socket.on("unsubscribeFromStatus", (userIdsToUnwatch) => {
+            userIdsToUnwatch.forEach(id => {
+                socket.leave(`status_${id}`);
+            });
+        });
 
         socket.on("sendMessage", sendMessage);
         socket.on("send-channel-message", sendChannelMessage);

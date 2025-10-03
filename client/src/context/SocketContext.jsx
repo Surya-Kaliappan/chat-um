@@ -2,7 +2,8 @@ import { useAppStore } from '@/store';
 import { HOST } from '@/utils/constants';
 import { createContext, useContext, useEffect, useRef } from 'react'
 import { io } from 'socket.io-client';
-
+import { toast } from 'sonner';
+import { NotificationToast } from '@/components/NotificationToast';
 
 const SocketContext = createContext(null);
 
@@ -12,7 +13,7 @@ export const useSocket = () => {
 
 export const SocketProvider = ({children}) => {
     const socket = useRef();
-    const {userInfo} = useAppStore();
+    const {userInfo, updateUserStatus} = useAppStore();
 
     useEffect(() => {
         if(userInfo){
@@ -29,8 +30,19 @@ export const SocketProvider = ({children}) => {
 
                 if(selectedChatType!==undefined && (selectedChatData._id === message.sender._id || selectedChatData._id === message.recipient._id)){
                     addMessage(message);
+                    console.log(userInfo);
+                    console.log(message);
                 }
                 addContactsInDMContacts(message);
+                const imageUrl = message.sender.image ? `${HOST}/${message.sender.image}` : false;
+                if(userInfo.id === message.recipient._id){
+                    toast(<NotificationToast
+                        imageUrl={imageUrl}
+                        name={message.sender.firstName ? `${message.sender.firstName}` : `${message.sender.email}`}
+                        message={message.messageType === "text" ? message.content : "Sent a file"}
+                        color={message.sender.color}
+                    />)
+                }
             };
 
             const handleRecieveChannelMessage = (message) => {
@@ -42,8 +54,13 @@ export const SocketProvider = ({children}) => {
                 addChannelInChannelList(message);
             };
 
+            const handleStatusUpdate = ({userId, isOnline}) => {
+                updateUserStatus(userId, isOnline);
+            }
+
             socket.current.on("recieveMessage", handleRecieveMessage);
             socket.current.on("recieve-channel-message", handleRecieveChannelMessage);
+            socket.current.on("statusUpdate", handleStatusUpdate);
 
             return () => {
                 socket.current.disconnect();

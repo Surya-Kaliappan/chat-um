@@ -6,7 +6,7 @@ import { renameSync, unlinkSync } from "fs";
 const maxAge = 3 * 24 * 60 * 60 * 1000;  // 3 Days of Expire
 
 const createToken = (email, userId) => {
-    return jwt.sign({email, userId}, process.env.JWT_KEY, {expiresIn: maxAge});
+    return jwt.sign({email, userId}, process.env.JWT_KEY, {expiresIn: maxAge});  // Creating Token
 }
 
 export const signup = async (request, response, next) => {
@@ -15,9 +15,9 @@ export const signup = async (request, response, next) => {
         if(!email || !password){
             return response.status(400).send("Email and Password is required.");
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);  // Hashing password with 10 rounds
         const user = await User.create({email, password: hashedPassword});
-        response.cookie("jwt", createToken(email, user.id), {
+        response.cookie("jwt", createToken(email, user.id), {   // adding cookie to response with token
             maxAge, 
         });
         return response.status(201).json({
@@ -34,21 +34,21 @@ export const signup = async (request, response, next) => {
     }
 };
 
-export const login = async (request, response, nex) => {
+export const login = async (request, response, next) => {
     try {
         const {email, password} = request.body;
         if(!email || !password) {
             return response.status(400).send("Email and password is requied.");
         }
-        const user = await User.findOne({email});
+        const user = await User.findOne({email});  // Getting one result from the database
         if(!user){
             return response.status(404).send("User with the given email not found.");
         }
-        const auth = await bcrypt.compare(password, user.password);
+        const auth = await bcrypt.compare(password, user.password);  // compare the normal password with hashed password
         if(!auth){
             return response.status(400).send("Password is incorrect.");
         }
-        response.cookie("jwt", createToken(email, user.id), {
+        response.cookie("jwt", createToken(email, user.id), {  // Creating Cookie with token as same as Signup
             maxAge,
         });
         return response.status(200).json({
@@ -131,7 +131,7 @@ export const addProfileImage = async (request, response, next) => {
 
         const date = Date.now();
         let fileName = "uploads/profiles/" + date + request.file.originalname;
-        renameSync(request.file.path, fileName);
+        renameSync(request.file.path, fileName);  // Creating the new file in the given path
         
         const updatedUser = await User.findByIdAndUpdate(request.userId, {image: fileName}, {new: true, runValidators: true});
 
@@ -152,7 +152,7 @@ export const removeProfileImage = async (request, response, next) => {
             return response.status(404).send("User not found.");
         }
         if(user.image){
-            unlinkSync(user.image);
+            unlinkSync(user.image); // remove the image from the folder
         }
         user.image = null;
         await user.save();
@@ -165,7 +165,7 @@ export const removeProfileImage = async (request, response, next) => {
 
 export const logout = async (request, response, next) => {
     try{
-        response.cookie("jwt", "", {maxAge: 1});
+        response.cookie("jwt", "", {maxAge: 1});  // update the cookie to expire in 1ms
         return response.status(200).send("Logout Successfully");
     } catch (error) {
         return response.status(500).send("Internal Server Error");

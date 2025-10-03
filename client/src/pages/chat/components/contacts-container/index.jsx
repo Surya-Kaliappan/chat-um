@@ -2,14 +2,19 @@ import { apiClient } from "@/lib/api-client";
 import NewDM from "./components/new-dm";
 import ProfileInfo from "./components/profile-info";
 import { GET_DM_CONTACTS_ROUTES, GET_USER_CHANNELS_ROUTE } from "@/utils/constants";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppStore } from "@/store";
 import ContactList from "@/components/contact-list";
 import CreateChannel from "./components/create-channel";
+import { useStatusSubscription } from '@/hooks/useStatusSubscription.js';
 
 const ContactsContainer = () => {
 
   const {setDirectMessagesContacts, directMessagesContacts, channels, setChannels} = useAppStore();
+
+  const [contactIds, setContactIds] = useState([]);
+
+  useStatusSubscription(contactIds);
 
   useEffect(() => {
     const getContacts = async () => {
@@ -18,6 +23,10 @@ const ContactsContainer = () => {
       });
       if(response.data.contacts){
         setDirectMessagesContacts(response.data.contacts);
+        if(response.data.contacts.length > 0){
+          const fetchedContactIds = response.data.contacts.map(contact => contact._id);
+          setContactIds(fetchedContactIds);
+        }
       }
     }
 

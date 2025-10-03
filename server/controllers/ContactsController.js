@@ -10,7 +10,7 @@ export const searchContacts = async (request, response, next) => {
             return response.status(400).send("SearchTerm is required.");
         }
 
-        const sanitizedSearchTerm = searchTerm.replace(
+        const sanitizedSearchTerm = searchTerm.replace(   // sanitize input for regex
             /[.*+?^${}()|[\]\\]/g,
             "\\$&"
         );
