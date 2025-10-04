@@ -31,6 +31,38 @@ export const createChannel = async (request, response, next) => {
     }
 };
 
+export const EditChannel = async (request, response, next) => {
+    try{
+        const userId = request.userId;
+        const admin = await User.findById(userId);
+        if(!admin){
+            return response.status(400).send("Admin user not found.");
+        }
+        const {channelId, name, members} = request.body;
+        if(!channelId){
+            return response.status(400).send("Channel ID is required.");
+        }
+        const validMembers = await User.find({_id:{$in:members}});  // checking the presence of all memebers in the database
+        if(validMembers.length !== members.length){
+            return response.status(400).send("Some members are not Valid users.");
+        } 
+        const channelData = await Channel.findByIdAndUpdate(channelId,
+            {
+                name,
+                members,
+            },
+            { new: true, runValidators: true } // runValidators to check the errors in data and new as true for return the data
+        );
+
+        return response.status(201).json({channel: channelData});
+
+        // const udpateChannel = 
+    } catch (error) {
+        console.log({error});
+        return response.status(500).send("Internal Server Error");
+    }
+};
+
 export const getUserChannels = async (request, response, next) => {
     try{
         const userId = new mongoose.Types.ObjectId(request.userId);  // store the data as ObjectId type

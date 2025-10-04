@@ -30,12 +30,13 @@ export const SocketProvider = ({children}) => {
 
                 if(selectedChatType!==undefined && (selectedChatData._id === message.sender._id || selectedChatData._id === message.recipient._id)){
                     addMessage(message);
-                    console.log(userInfo);
-                    console.log(message);
                 }
                 addContactsInDMContacts(message);
                 const imageUrl = message.sender.image ? `${HOST}/${message.sender.image}` : false;
                 if(userInfo.id === message.recipient._id){
+                    if(selectedChatData){
+                        if(selectedChatData._id === message.sender._id) return;
+                    }
                     toast(<NotificationToast
                         imageUrl={imageUrl}
                         name={message.sender.firstName ? `${message.sender.firstName}` : `${message.sender.email}`}

@@ -45,7 +45,7 @@ const MessageBar = () => {
         if(selectedChatType === "contact") {
             socket.emit("sendMessage", {
                 sender: userInfo.id,
-                content: message,
+                content: message.trim(),
                 recipient: selectedChatData._id,
                 messageType: "text",
                 fileUrl: undefined,
@@ -53,7 +53,7 @@ const MessageBar = () => {
         } else if(selectedChatType === "channel") {
             socket.emit("send-channel-message", {
                 sender: userInfo.id,
-                content: message,
+                content: message.trim(),
                 channelId: selectedChatData._id,
                 messageType: "text",
                 fileUrl: undefined,
@@ -111,8 +111,25 @@ const MessageBar = () => {
     }
 
     return (
-        <div className="min-h-[8vh] sm:min-h-[10vh] bg-[#1c1d25] flex justify-end items-end px-3 sm:px-8 mb-15 sm:mb-6 gap-2 sm:gap-6">
-            <div className="flex-1 flex bg-[#2a2b33] rounded-md rounded-tr-4xl rounded-br-4xl items-end gap-2 sm:gap-5 pr-2 sm:pr-5">
+        <div className="min-h-[8vh] sm:min-h-[10vh] bg-[#1c1d25] flex justify-end items-end px-3 sm:px-8 md:px-5 mb-15 sm:mb-6 md:mb-4 gap-2 sm:gap-6">
+            <div className="flex-1 flex bg-[#2a2b33] rounded-md rounded-tr-4xl rounded-br-4xl items-end gap-0 sm:gap-5 px-2 sm:px-5">
+                <div className="relative">
+                    <button 
+                        className="text-neutral-500 pb-3 sm:pb-5 focus:border-none focus:outline-none focus:text-white duration-300 transition-all cursor-pointer"
+                        onClick={() => setEmojiPickerOpen(true)}
+                    >
+                        <RiEmojiStickerLine className="text-2xl"/>
+                    </button>
+                    <div className="absolute bottom-16 sm:bottom-20 left-0" ref={emojiRef}>
+                        <EmojiPicker 
+                            theme="dark"
+                            open={emojiPickerOpen}
+                            onEmojiClick={handleAddEmoji}
+                            autoFocusSearch={false}
+                            width="320px"
+                        />
+                    </div>
+                </div>
                 <textarea 
                     ref={textareaRef}
                     className="flex-1 w-full p-3 sm:p-5 rounded-md focus:border-none focus:outline-none resize-none max-h-40" 
@@ -127,27 +144,11 @@ const MessageBar = () => {
                     <GrAttachment className="text-2xl"/>
                 </button>
                 <input type="file" className="hidden" ref={fileInputRef} onChange={handleAttachmentChange} />
-                <div className="relative">
-                    <button 
-                        className="text-neutral-500 pb-3 sm:pb-5 focus:border-none focus:outline-none focus:text-white duration-300 transition-all cursor-pointer"
-                        onClick={() => setEmojiPickerOpen(true)}
-                    >
-                        <RiEmojiStickerLine className="text-2xl"/>
-                    </button>
-                    <div className="absolute bottom-16 left-1/2 -translate-x-3/4 sm:left-auto sm:right-0 sm:transform-none" ref={emojiRef}>
-                        <EmojiPicker 
-                            theme="dark"
-                            open={emojiPickerOpen}
-                            onEmojiClick={handleAddEmoji}
-                            autoFocusSearch={false}
-                        />
-                    </div>
-                </div>
             </div>
             <button 
                 className="bg-[#f59c0d]/70 rounded-md flex items-center justify-center p-3 sm:p-5 focus:border-none hover:bg-[#0c6aeb] focus:bg-[#741bda] focus:outline-none focus:text-white duration-300 transition-all cursor-pointer"
                 onClick={handleSendMessage}
-                disabled={!message}
+                disabled={!message.trim()}
             >
                 <IoSend className="text-2xl"/>
             </button>

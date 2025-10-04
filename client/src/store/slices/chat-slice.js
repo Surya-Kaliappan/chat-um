@@ -60,6 +60,16 @@ export const createChatSlice = (set, get) => ({
             channels.splice(index,1);
             channels.unshift(data);
         }
+        set({channels: channels});
+    },
+
+    updateChannelInChannelList: (message) => {
+        const channels = get().channels;
+        const index = channels.findIndex((channel) => channel._id === message._id);
+        if(index!==-1 && index!==undefined){
+            channels[index] = {...channels[index], ...message};
+        }
+        set({channels: channels});
     },
 
     addContactsInDMContacts: (message) => {

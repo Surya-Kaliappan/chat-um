@@ -27,6 +27,7 @@ const MessageContainer = () => {
     const [imageURL, setImageURL] = useState(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [pendingContact, setPendingContact] = useState(null);
+    const [clickedContact, setClickedContact] = useState(null);
 
     useEffect(() => {
         const getMessages = async () => {
@@ -113,7 +114,7 @@ const MessageContainer = () => {
         return(
             <div className={`${message.sender === selectedChatData._id ? "text-left":"text-right"}`}>
                 {message.messageType === "text" && (
-                    <div className={`${message.sender !== selectedChatData._id ? "bg-[#0c6aeb]/30 text-white/90 border-[#0c6aeb]/80 text-left rounded-bl-md" : "bg-[#f59c0d]/30 text-white/80 border-[#f59c0d]/80 rounded-br-md"} text-sm sm:text-[16px] border inline-block px-3 py-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-3 sm:ml-6 max-w-[80%] sm:max-w-[45%] break-words whitespace-pre-line`}>
+                    <div className={`${message.sender !== selectedChatData._id ? "bg-[#0c6aeb]/30 text-white/90 border-[#0c6aeb]/80 text-left rounded-bl-md" : "bg-[#f59c0d]/30 text-white/80 border-[#f59c0d]/80 rounded-br-md"} text-sm sm:text-[16px] border inline-block px-3 py-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-0 sm:ml-6 md:ml-1 max-w-[80%] sm:max-w-[45%] break-words whitespace-pre-line`}>
                         {message.content}
                     </div>
                 )}
@@ -141,7 +142,7 @@ const MessageContainer = () => {
                         </div>)}
                     </div>
                 )}
-                <div className="text-[10px] sm:text-[12px] pr-2 text-white/60 ml-5 sm:ml-8 mt-1">
+                <div className="text-[10px] sm:text-[12px] pr-1 text-white/60 ml-3 sm:ml-6 mt-1/2 sm:mt-1">
                     {moment(message.timestamp).format("LT")}
                 </div>
             </div>
@@ -155,19 +156,21 @@ const MessageContainer = () => {
         if (selectedChatData && selectedChatData._id !== pendingContact._id) {
             setSelectedChatMessages([]);
         }
+        setClickedContact(null);
         setIsDialogOpen(false);
         setPendingContact(null);
     };
 
     const handleClick = (contact) => {
         setPendingContact(contact);
+        setClickedContact(contact.firstName ? `${contact.firstName} ${contact.lastName}` : contact.email);
         setIsDialogOpen(true);
     };
 
 
     const renderChannelMessages = (message) => {
         return (
-            <div className={`mt-5 ${message.sender._id !== userInfo.id ? "text-left" : "text-right"}`}>
+            <div className={`mt-5 ml-0 sm:ml-3 ${message.sender._id !== userInfo.id ? "text-left" : "text-right"}`}>
                 {message.sender._id !== userInfo.id && (<div className="flex items-center justify-start gap-3">
                     <Avatar className="h-8 w-8 rounded-full overflow-hidden">
                         {message.sender.image && (
@@ -198,7 +201,7 @@ const MessageContainer = () => {
                         <div className={`${message.sender._id === userInfo.id 
                             ? "bg-[#0c6aeb]/30 text-white/90 border-[#0c6aeb]/80 text-left rounded-bl-md" 
                             : "bg-[#2a2b33]/5 text-white/80 border-[#ffffff]/20 rounded-br-md"} 
-                            text-sm sm:text-[16px] border inline-block px-3 py-2 rounded-tl-md rounded-tr-md my-1 mt-2 ml-6 max-w-[80%] sm:max-w-[45%] break-words whitespace-pre-line`}>
+                            text-sm sm:text-[16px] border inline-block px-5 py-2 rounded-tl-md rounded-tr-md my-1 mt-2 ml-6 max-w-[80%] sm:max-w-[45%] break-words whitespace-pre-line`}>
                                 {message.content}
                         </div>
                 )}
@@ -257,7 +260,7 @@ const MessageContainer = () => {
             <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <AlertDialogContent className="bg-[#181920] border-none text-white poppins-medium">
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Are you sure you want to switch chats?</AlertDialogTitle>
+                    <AlertDialogTitle>{`Are you sure you want to switch chats to ${clickedContact}?`}</AlertDialogTitle>
                     <AlertDialogDescription>
                     
                     </AlertDialogDescription>

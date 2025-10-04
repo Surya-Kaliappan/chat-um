@@ -27,19 +27,19 @@ const ProfileInfo = () => {
     return(
         <div className="absolute bottom-0 h-16 flex items-center justify-between px-10 w-full bg-[#2a2b33]">
             <div className="flex gap-3 items-center justify-center">
-                <div className="h-12 w-12 relative">
-                    <Avatar className="h-12 w-12 rounded-full overflow-hidden">
+                <div className="h-10 sm:h-12 w-10 sm:w-12 relative">
+                    <Avatar className="h-10 sm:h-12 w-10 sm:w-12 rounded-full overflow-hidden">
                         {userInfo.image ? (
                             <AvatarImage src={`${HOST}/${userInfo.image}`} alt="profile" className="object-cover w-full h-full bg-black" />
                         ) : (
-                            <div className={`uppercase h-12 w-12 text-lg border-[1px] flex items-center justify-center rounded-full ${getColor(userInfo.color)}`}>
+                            <div className={`uppercase h-10 sm:h-12 w-10 sm:w-12 text-lg border-[1px] flex items-center justify-center rounded-full ${getColor(userInfo.color)}`}>
                                 {userInfo.firstName ? userInfo.firstName.split("").shift() : userInfo.email.split("").shift()}
                             </div>
                         )}
                     </Avatar>
                 </div>
-                <div>
-                    {userInfo.firstName && userInfo.lastName ? `${userInfo.firstName} ${userInfo.lastName}` : ""}
+                <div className="text-sm sm:text-md font-bold">
+                    {userInfo.firstName && userInfo.lastName ? `${userInfo.firstName} ${userInfo.lastName}` : userInfo.email}
                 </div>
             </div>
             <div className="flex gap-5">

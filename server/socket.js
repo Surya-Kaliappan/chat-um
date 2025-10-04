@@ -49,6 +49,13 @@ const setupSocket = (server) => {
 
     const sendChannelMessage = async (message) => {
         const {channelId, sender, content, messageType, fileUrl} = message;
+        const channel = await Channel.findById(channelId).populate("members");
+        const members = channel.members;
+        const verifyContact = members.find(member => member._id.toString() === sender);
+        if(!(verifyContact || channel.admin[0]._id.toString() === sender)){
+            return ;
+        }
+
         const createdMessage = await Message.create({
             sender,
             recipient: null,
@@ -66,7 +73,6 @@ const setupSocket = (server) => {
             $push: {messages: createdMessage._id},
         });
 
-        const channel = await Channel.findById(channelId).populate("members");
 
         const finalData = { ...messageData._doc, channelId: channel._id};
 

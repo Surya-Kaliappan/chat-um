@@ -33,11 +33,11 @@ const Profile = () => {
     }, [userInfo]);
 
     const validateProfile = () => {
-        if(!firstName) {
+        if(!firstName.trim()) {
             toast.error("First Name is required");
             return false;
         }
-        if(!lastName) {
+        if(!lastName.trim()) {
             toast.error("Last Name is required");
             return false;
         }

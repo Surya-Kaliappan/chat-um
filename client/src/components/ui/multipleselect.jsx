@@ -264,14 +264,14 @@ const MultipleSelector = React.forwardRef(
             inputRef.current?.focus();
           }}
         >
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3 max-h-[150px] overflow-y-auto overflow-x-hidden">
             {selected.map((option) => {
               return (
                 <Badge
                   key={option.value}
                   className={cn(
-                    "data-[disabled]:bg-muted-foreground data-[disabled]:text-muted data-[disabled]:hover:bg-muted-foreground bg-[#f59c0d]/80 p-2",
-                    "data-[fixed]:bg-muted-foreground data-[fixed]:text-muted data-[fixed]:hover:bg-muted-foreground",
+                    "data-[disabled]:bg-muted-foreground font-bold data-[disabled]:text-muted data-[disabled]:hover:bg-muted-foreground bg-[#f59c0d]/80 p-1 sm:p-2 text-[12px] sm:text-[16px]",
+                    "data-[fixed]:bg-muted-foreground font-bold data-[fixed]:text-muted data-[fixed]:hover:bg-muted-foreground",
                     badgeClassName
                   )}
                   data-fixed={option.fixed}
@@ -326,7 +326,7 @@ const MultipleSelector = React.forwardRef(
                   : placeholder
               }
               className={cn(
-                "flex-1 bg-transparent outline-none placeholder:text-muted-foreground",
+                "flex-1 bg-transparent outline-none placeholder:text-muted-foreground min-w-0",
                 {
                   "w-full": hidePlaceholderWhenSelected,
                   "px-3 py-2": selected.length === 0,
@@ -353,7 +353,7 @@ const MultipleSelector = React.forwardRef(
         <div className="relative">
           {open && (
             <CommandList
-              className="absolute top-1 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in"
+              className="absolute top-1 z-10 w-full rounded-md border border-gray-700 bg-[#2c2e3b] text-white shadow-md outline-none animate-in"
               onMouseLeave={() => {
                 mouseOn.current = false;
               }}
@@ -384,7 +384,7 @@ const MultipleSelector = React.forwardRef(
                           return (
                             <CommandItem
                               key={option.value}
-                              value={option.value}
+                              value={option.label}
                               disabled={option.disable}
                               onMouseDown={(e) => {
                                 e.preventDefault();
@@ -401,10 +401,10 @@ const MultipleSelector = React.forwardRef(
                                 onChange?.(newOptions);
                               }}
                               className={cn(
-                                "cursor-pointer",
-                                option.disable &&
-                                  "cursor-default text-muted-foreground"
-                              )}
+    "cursor-pointer text-white data-[selected=true]:bg-gray-700 data-[selected=true]:text-white", // <-- ADD THESE CLASSES
+    option.disable &&
+      "cursor-default text-muted-foreground"
+  )}
                             >
                               {option.label}
                             </CommandItem>

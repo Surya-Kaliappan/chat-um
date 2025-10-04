@@ -3,13 +3,15 @@ import { getColor } from '@/lib/utils';
 import { useAppStore } from '@/store';
 import { HOST } from '@/utils/constants';
 import { RiCloseFill } from 'react-icons/ri';
+import EditChannel from '../edit-channel';
 
 const ChatHeader = () => {
 
-    const {closeChat, selectedChatData, selectedChatType, statusMap} = useAppStore();
-
+    const {closeChat, selectedChatData, selectedChatType, statusMap, userInfo} = useAppStore();
+    // console.log(channels);
+    // console.log(selectedChatData);
     return( 
-        <div className="h-[8vh] sm:h-[10vh] border-b-2 border-[#2f303b] flex items-center justify-between pl-2 sm:pl-5">
+        <div className="h-[8vh] sm:h-[10vh] border-b-2 border-[#2f303b] flex items-center justify-between px-2 sm:px-5">
             <div className="flex gap-5 items-center w-full">
                 <div className="flex items-center justify-center gap-5">
                     <button className='text-neutral-500 focus:border-none focus:outline-none focus:text-white cursor-pointer duration-300 transition-all' onClick={closeChat}>
@@ -26,7 +28,7 @@ const ChatHeader = () => {
                                     {selectedChatData.firstName ? selectedChatData.firstName.split("").shift() : selectedChatData.email.split("").shift()}
                                 </div>
                             )}
-                        </Avatar> : <div className="bg-[#ffffff22] h-10 w-10 flex items-center justify-center rounded-full">#</div>}
+                        </Avatar> : <div className="bg-[#ffffff22] h-10 sm:h-12 w-10 sm:w-12 flex items-center justify-center rounded-full">#</div>}
                     </div>
                     <div>
                         {selectedChatType === 'channel' && selectedChatData.name}
@@ -40,6 +42,7 @@ const ChatHeader = () => {
                     </div>
                 </div>
             </div>
+            {selectedChatType === "channel" && selectedChatData.admin[0] === userInfo.id && <EditChannel />}
         </div>
     );
 };

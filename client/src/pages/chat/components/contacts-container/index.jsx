@@ -7,6 +7,7 @@ import { useAppStore } from "@/store";
 import ContactList from "@/components/contact-list";
 import CreateChannel from "./components/create-channel";
 import { useStatusSubscription } from '@/hooks/useStatusSubscription.js';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const ContactsContainer = () => {
 
@@ -45,27 +46,40 @@ const ContactsContainer = () => {
 
   return(
     <div className="relative md:w-[35vw] lg:w-[30vw] xl:w-[30vw] bg-[#1b1c24] border-r-2 border-[#2f303b] w-full">
-        <div className="pt-3">
+        <div className="pt-0 sm:pt-3">
             <Logo />
         </div>
-        <div className="my-5">
-            <div className="flex items-center justify-between pr-10">
-                <Title text="Direct Messages" />
-                <NewDM />
+        <Tabs defaultValue="channel" className="w-full">
+          <TabsList className="bg-transparent rounded-none w-full mb-3 px-5">
+            <TabsTrigger value="channel"
+            className="data-[state=active]:bg-transparent text-sm sm:text-md text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-white data-[state=active]:font-bold data-[state=active]:border-b-white/80 p-5 cursor-pointer transition-all duration-300">Groups</TabsTrigger>
+            <TabsTrigger value="dm" 
+            className="data-[state=active]:bg-transparent text-sm sm:text-md text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-white data-[state=active]:font-bold data-[state=active]:border-b-white/80 p-5 cursor-pointer transition-all duration-300">DM</TabsTrigger>
+          </TabsList>
+          <TabsContent value="dm" className="flex flex-col">
+            <div className="my-5">
+              <div className="flex items-center justify-between pr-7 sm:pr-10">
+                  <Title text="Direct Messages" />
+                  <NewDM />
+              </div>
+              <div className="max-h-[38vh] overflow-y-auto scrollbar-hidden">
+                <ContactList contacts={directMessagesContacts} />
+              </div>
             </div>
-            <div className="max-h-[38vh] overflow-y-auto scrollbar-hidden">
-              <ContactList contacts={directMessagesContacts} />
+          </TabsContent>
+          <TabsContent value="channel" className="flex flex-col">
+            <div className="my-5">
+              <div className="flex items-center justify-between pr-7 sm:pr-10">
+                  <Title text="Channels" />
+                  <CreateChannel />
+              </div>
+              <div className="max-h-[38vh] overflow-y-auto scrollbar-hidden">
+                <ContactList contacts={channels} isChannel={true} />
+              </div>
             </div>
-        </div>
-        <div className="my-5">
-            <div className="flex items-center justify-between pr-10">
-                <Title text="Channels" />
-                <CreateChannel />
-            </div>
-            <div className="max-h-[38vh] overflow-y-auto scrollbar-hidden">
-              <ContactList contacts={channels} isChannel={true} />
-            </div>
-        </div>
+          </TabsContent>
+        </Tabs>
+  
         <ProfileInfo />
     </div>
   );
@@ -79,8 +93,7 @@ const Logo = () => {
     <div className="flex p-5  justify-start items-center gap-2">
       <svg
         id="logo-38"
-        width="78"
-        height="32"
+        className="w-[58px] h-[24px] md:w-[78px] md:h-[32px]"
         viewBox="0 0 78 32"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +115,7 @@ const Logo = () => {
           fill="#e89f6eff"
         ></path>{" "}
       </svg>
-      <span className="text-3xl font-semibold ">Chat-UM</span>
+      <span className="text-2xl md:text-3xl font-semibold ">Chat-UM</span>
     </div>
   );
 };
