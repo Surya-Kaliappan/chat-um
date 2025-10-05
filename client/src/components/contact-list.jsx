@@ -30,11 +30,11 @@ const ContactList = ({contacts, isChannel = false}) => {
                 >
                     <div className="flex gap-4 items-center justify-start text-neutral-300">
                         {
-                            !isChannel && (<Avatar className="h-10 w-10 rounded-full overflow-hidden">
+                            !isChannel && (<Avatar className="h-10 w-10 rounded-full overflow-hidden bg-[#1b1c24]">
                                 {contact.image ? (
                                     <AvatarImage src={`${HOST}/${contact.image}`} alt="profile" className="object-cover w-full h-full bg-black" />
                                 ) : (
-                                    <div className={`${selectedChatData && selectedChatData._id === contact._id ? "bg-[#f58e0d] border border-white/70" : getColor(contact.color)} uppercase h-10 w-10 text-lg border-[1px] flex items-center justify-center rounded-full`}>
+                                    <div className={`${getColor(contact.color)} uppercase h-10 w-10 text-lg border-[1px] flex items-center justify-center rounded-full`}>
                                         {contact.firstName ? contact.firstName.split("").shift() : contact.email.split("").shift()}
                                     </div>
                                 )}

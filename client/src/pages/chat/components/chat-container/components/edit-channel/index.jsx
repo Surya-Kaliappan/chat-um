@@ -54,7 +54,7 @@ const EditChannel = () => {
         setSelectedContacts(getDetailsOfIds(memberIds));
     }, [allContacts]);
 
-    const createChannel = async () => {
+    const updateChannel = async () => {
         try{
             if(channelName.length > 0 && selectedContacts.length > 0){
                 const response = await apiClient.post(
@@ -99,7 +99,7 @@ const EditChannel = () => {
             <Dialog open={newChannelModal} onOpenChange={setNewChannelModal}>
                 <DialogContent className="bg-[#181920] border-none text-white w-[400px] sm:w-[600px] h-auto min-h-[400px] sm:min-h-[500px] flex flex-col poppins-medium">
                     <DialogHeader>
-                    <DialogTitle>Creating New channel.</DialogTitle>
+                    <DialogTitle>Update channel.</DialogTitle>
                     <DialogDescription>Select Peoples</DialogDescription>
                     </DialogHeader>
                     <div>
@@ -124,7 +124,7 @@ const EditChannel = () => {
                         />
                     </div>
                     <div className="mt-auto">
-                        <Button className="w-full hover:bg-[#f59c0d]/60 bg-[#0c6aeb]/80 transition-all duration-300" onClick={createChannel} 
+                        <Button className="w-full hover:bg-[#f59c0d]/60 bg-[#0c6aeb]/80 transition-all duration-300" onClick={updateChannel} 
                         disabled={updateBtn}>
                             Update Channel
                         </Button>

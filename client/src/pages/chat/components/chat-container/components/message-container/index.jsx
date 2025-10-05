@@ -114,13 +114,13 @@ const MessageContainer = () => {
         return(
             <div className={`${message.sender === selectedChatData._id ? "text-left":"text-right"}`}>
                 {message.messageType === "text" && (
-                    <div className={`${message.sender !== selectedChatData._id ? "bg-[#0c6aeb]/30 text-white/90 border-[#0c6aeb]/80 text-left rounded-bl-md" : "bg-[#f59c0d]/30 text-white/80 border-[#f59c0d]/80 rounded-br-md"} text-sm sm:text-[16px] border inline-block px-3 py-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-0 sm:ml-6 md:ml-1 max-w-[80%] sm:max-w-[45%] break-words whitespace-pre-line`}>
+                    <div className={`${message.sender !== selectedChatData._id ? "bg-[#0c6aeb]/30 text-white/90 border-[#0c6aeb]/80 text-left rounded-bl-md" : "bg-[#f59c0d]/30 text-white/80 border-[#f59c0d]/80 rounded-br-md"} text-sm sm:text-[16px] border inline-block px-3 py-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-1 sm:ml-2 md:ml-3 max-w-[80%] sm:max-w-[45%] break-words whitespace-pre-line`}>
                         {message.content}
                     </div>
                 )}
                 {
                     message.messageType === "file" && (
-                    <div className={`${message.sender !== selectedChatData._id ? "bg-[#0c6aeb]/30 text-[#0c6aeb]/90 border-[#0c6aeb]/50 text-left rounded-bl-md" : "bg-[#f59c0d]/30 text-white/80 border-[#f59c0d]/80 rounded-br-md"} border inline-block p-2 rounded-tl-md rounded-tr-md my-1 mt-2 ml-3 sm:ml-6 max-w-[80%] break-words`}>
+                    <div className={`${message.sender !== selectedChatData._id ? "bg-[#0c6aeb]/30 text-[#0c6aeb]/90 border-[#0c6aeb]/50 text-left rounded-bl-md" : "bg-[#f59c0d]/30 text-white/80 border-[#f59c0d]/80 rounded-br-md"} border inline-block p-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-1 sm:ml-2 md:ml-3 md-2 max-w-[80%] break-words`}>
                         {checkIfImage(message.fileUrl) ? 
                         (<div className="cursor-pointer" 
                         onClick={() => {
@@ -142,7 +142,7 @@ const MessageContainer = () => {
                         </div>)}
                     </div>
                 )}
-                <div className="text-[10px] sm:text-[12px] pr-1 text-white/60 ml-3 sm:ml-6 mt-1/2 sm:mt-1">
+                <div className="text-[10px] sm:text-[12px] pr-1 text-white/60 ml-2 sm:ml-3 md:ml-4 mt-1/2 sm:mt-1">
                     {moment(message.timestamp).format("LT")}
                 </div>
             </div>

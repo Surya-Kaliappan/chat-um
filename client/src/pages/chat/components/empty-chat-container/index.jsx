@@ -6,15 +6,15 @@ const EmptyChatContaienr = () => {
         <div className="flex-1 md:bg-[#1c1d25] md:flex flex-col justify-center items-center hidden duration-1000 transition-all">
             <Lottie
                 isClickToPauseDisabled={true}
-                height={200}
-                width={200}
+                height={300}
+                width={300}
                 options={animationDefaultOptions}
             />
-            <div className="text-capcity-80 text-white flex flex-col gap-5 items-center mt-10 lg:text-4xl text-3xl transition-all duration-300 text-center">
+            <div className="text-capcity-80 text-white flex flex-col gap-5 items-center lg:text-4xl text-3xl transition-all duration-300 text-center">
                 <h3 className="poppins-medium">
-                    Hi<span className="text-[#f59c0d]">!</span> Welcome to
-                    <span className="text-[#0c6aeb]"> Chat</span> App
-                    <span className="text-[#f59c0d]">.</span>
+                    Hi! Welcome to
+                    <span className="text-[#0c6aeb] font-semibold"> Chat </span>
+                    <span className="text-[#f59c0d] font-semibold">UM</span>
 
                 </h3>
             </div>

@@ -8,6 +8,7 @@ import { CREATE_CHANNEL_ROUTE, GET_ALL_CONTACTS_ROUTES } from "@/utils/constants
 import { useAppStore } from "@/store";
 import { Button } from "@/components/ui/button";
 import MultipleSelector from "@/components/ui/multipleselect";
+import { toast } from "sonner";
 
 const CreateChannel = () => {
     const {addChannels} = useAppStore();
@@ -43,6 +44,8 @@ const CreateChannel = () => {
                     setNewChannelModal(false);
                     addChannels(response.data.channel);
                 }
+            } else {
+                toast("Please Fill the Required Details")
             }
         } catch (error) {
             console.log({error});
@@ -64,7 +67,7 @@ const CreateChannel = () => {
                 </TooltipContent>
             </Tooltip>
             <Dialog open={newChannelModal} onOpenChange={setNewChannelModal}>
-                <DialogContent className="bg-[#181920] border-none text-white w-[400px] h-[400px] flex flex-col poppins-medium">
+                <DialogContent className="bg-[#181920] border-none text-white w-[400px] sm:w-[600px] h-auto min-h-[400px] sm:min-h-[500px] flex flex-col poppins-medium">
                     <DialogHeader>
                     <DialogTitle>Creating New channel.</DialogTitle>
                     <DialogDescription>Select Peoples</DialogDescription>
@@ -72,7 +75,7 @@ const CreateChannel = () => {
                     <div>
                         <Input
                             placeholder="Channel Name"
-                            className="rounded-lg text-sm sm:text-md py-6 px-4 bg-[#2c2e3b] border-none"
+                            className="rounded-lg p-6 bg-[#2c2e3b] border-none"
                             onChange={(e) => setChannelName(e.target.value)}
                             value={channelName}
                         />
@@ -80,12 +83,13 @@ const CreateChannel = () => {
                     <div>
                         <MultipleSelector 
                             className="rounded-lg bg-[#2c2e3b] border-none py-2 text-white"
-                            options={allContacts}
-                            placeholder="Search Contacts"
                             value={selectedContacts}
+                            options={allContacts}
+                            placeholder="Search"
                             onChange={setSelectedContacts}
+                            hideClearAllButton={true}
                             emptyIndicator = {
-                                <p className="text-center text-sm font-bold sm:text-lg h-0 sm:h-4 text-gray-600">No Results found.</p>
+                                <p className="text-center text-sm font-bold sm:text-lg h-3 sm:h-4 text-gray-400">No Results found.</p>
                             }
                         />
                     </div>
