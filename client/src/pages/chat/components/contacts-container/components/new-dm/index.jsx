@@ -19,7 +19,7 @@ const NewDM = () => {
     const [searchedContacts, setSearchedContacts] = useState([]);
     const [searching, setSearching] = useState(false);
 
-    const deBouncedTerm = useDebounce(searchName, 200);
+    const deBouncedTerm = useDebounce(searchName, 500);
 
     useEffect(() => {
         const searchContacts = async (searchTerm) => {
@@ -48,6 +48,7 @@ const NewDM = () => {
         setSelectedChatType("contact");
         setSelectedChatData(contact);
         setSearchedContacts([]);
+        setSearchName("");
     };
 
     return (
@@ -68,12 +69,13 @@ const NewDM = () => {
                 <DialogContent className="bg-[#181920] border-none text-white w-[400px] sm:w-[600px] h-auto min-h-[450px] sm:min-h-[500px] flex flex-col poppins-medium">
                     <DialogHeader>
                         <DialogTitle>{searching ? 'Searching' : 'Search Contact'}</DialogTitle>
-                    <DialogDescription></DialogDescription>
+                    <DialogDescription>Direct Message</DialogDescription>
                     </DialogHeader>
                     <div>
                         <Input
                             placeholder="Search Contacts"
                             className="rounded-lg p-6 bg-[#2c2e3b] border-none"
+                            value={searchName}
                             onChange={(e) => setSearchName(e.target.value.trim())}
                         />
                     </div>

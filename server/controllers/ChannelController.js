@@ -56,7 +56,6 @@ export const EditChannel = async (request, response, next) => {
 
         return response.status(201).json({channel: channelData});
 
-        // const udpateChannel = 
     } catch (error) {
         console.log({error});
         return response.status(500).send("Internal Server Error");
@@ -92,6 +91,47 @@ export const getChannelMessages = async (request, response, next) => {
         }
         const messages = channel.messages;
         return response.status(201).json({messages});
+    } catch (error) {
+        console.log({error});
+        return response.status(500).send("Internal Server Error");
+    }
+};
+
+export const searchChannels = async (request, response, next) => {
+    try{
+        const {searchTerm} = request.body;
+
+        if(searchTerm === undefined || searchTerm === null){
+            return response.status(400).send("SearchTerm is required");
+        }
+        const sanitizedSearchTerm = searchTerm.replace(   // sanitize input for regex
+            /[.*+?^${}()|[\]\\]/g,
+            "\\$&"
+        );
+
+        const regex = new RegExp(sanitizedSearchTerm, "i");
+
+        const channels = await Channel.find({name: regex}).select("_id name admin").populate({
+            path: "admin",
+            select: "_id email firstName lastName"
+        });
+
+        return response.status(200).json({channels});
+    } catch (error) {
+        console.log({error});
+        return response.status(500).send("Internal Server Error");
+    }
+};
+
+export const getChannel = async (request, response, next) => {
+    try{
+        const {channelId} = request.params;
+        if(channelId === undefined || channelId === null){
+            return response.status(400).send("Channel Id is required.");
+        }
+        const channel = await Channel.findOne({_id: channelId});
+
+        return response.status(200).json({channel});
     } catch (error) {
         console.log({error});
         return response.status(500).send("Internal Server Error");
