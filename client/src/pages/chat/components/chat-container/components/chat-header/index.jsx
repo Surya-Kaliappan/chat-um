@@ -8,8 +8,7 @@ import EditChannel from '../edit-channel';
 const ChatHeader = () => {
 
     const {closeChat, selectedChatData, selectedChatType, statusMap, userInfo} = useAppStore();
-    // console.log(channels);
-    // console.log(selectedChatData);
+
     return( 
         <div className="h-[8vh] sm:h-[10vh] border-b-2 border-[#2f303b] flex items-center justify-between px-2 sm:px-5">
             <div className="flex gap-5 items-center w-full">

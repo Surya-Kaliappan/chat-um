@@ -186,7 +186,7 @@ const MessageContainer = () => {
                         &nbsp; <span className="text-[10px] sm:text-[12px] hover:text-white" onClick={()=> handleClick(message.sender)}>
                             <Tooltip>
                                 <TooltipTrigger className="cursor-pointer">
-                                    {`- { ${message.sender.email} }`}
+                                    {`{ ${message.sender.email} }`}
                                 </TooltipTrigger>
                                 <TooltipContent className="border-none p-3 text-white">
                                     <p>Click to View DM</p>
@@ -239,7 +239,7 @@ const MessageContainer = () => {
 
 
     return (
-        <div className="flex-1 overflow-y-auto p-4 md:w-[65vw] lg:w-[70vw] xl:w-[75vw] w-full">
+        <div className="flex-1 p-4 md:w-[65vw] lg:w-[70vw] xl:w-[70vw] w-full">
             {renderMessages()}
             <div ref={scrollRef} />
             {

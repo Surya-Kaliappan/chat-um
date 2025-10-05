@@ -6,6 +6,10 @@ import { HOST } from "@/utils/constants";
 const ContactList = ({contacts, isChannel = false}) => {
 
     const {selectedChatData, setSelectedChatData, setSelectedChatType, setSelectedChatMessages} = useAppStore();
+    // if(!isChannel){
+    //     const contactOne = contacts[0];
+    //     contacts = [contactOne,contactOne,contactOne,contactOne,contactOne,contactOne,contactOne,contactOne,contactOne,contactOne,contactOne];
+    // }
 
     const handleClick = (contact) => {
         if(isChannel) setSelectedChatType("channel");
@@ -21,7 +25,7 @@ const ContactList = ({contacts, isChannel = false}) => {
             {contacts.map((contact) => (
                 <div 
                 key={contact._id} 
-                className={`pl-7 py-2 transition-all text-sm sm:text-md duration-300 cursor-pointer ${selectedChatData && selectedChatData._id === contact._id ? "bg-[#0c6aeb]/30 border-1 border-[#0c6aeb]/80 hover:bg-[#0c6aeb]/50":"hover-bg[#8417ff]"}`}
+                className={`pl-7 py-3 transition-all text-sm sm:text-md duration-300 hover:bg-white/10 cursor-pointer ${selectedChatData && selectedChatData._id === contact._id ? "bg-[#0c6aeb]/30 border-1 border-[#0c6aeb]/80 hover:bg-[#0c6aeb]/50":"hover-bg[#8417ff]"}`}
                 onClick={() => handleClick(contact)}
                 >
                     <div className="flex gap-4 items-center justify-start text-neutral-300">
@@ -37,9 +41,18 @@ const ContactList = ({contacts, isChannel = false}) => {
                             </Avatar>
                         )}
                         {isChannel && <div className="bg-[#ffffff22] h-10 w-10 flex items-center justify-center rounded-full">#</div>}
+                        <div className="text-sm sm:text-[16px]">
                         {
-                            isChannel ? <span>{contact.name}</span> : <span>{contact.firstName ? `${contact.firstName} ${contact.lastName}` : contact.email}</span>
+                            isChannel 
+                            ? <div className="font-bold">{contact.name}</div> 
+                            : <div className="font-bold">
+                                {contact.firstName ? `${contact.firstName} ${contact.lastName}` : contact.email}
+                            </div>
                         }
+                        {
+                            !isChannel && <div className="text-white/50 text-[10px] sm:text-[12px] mt-1">{contact.email}</div>
+                        }
+                        </div>
                     </div>
                 </div>
             ))}

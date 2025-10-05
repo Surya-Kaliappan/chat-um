@@ -112,7 +112,7 @@ const MessageBar = () => {
 
     return (
         <div className="min-h-[8vh] sm:min-h-[10vh] bg-[#1c1d25] flex justify-end items-end px-3 sm:px-8 md:px-5 mb-15 sm:mb-6 md:mb-4 gap-2 sm:gap-6">
-            <div className="flex-1 flex bg-[#2a2b33] rounded-md rounded-tr-4xl rounded-br-4xl items-end gap-0 sm:gap-5 px-2 sm:px-5">
+            <div className="flex-1 flex bg-[#2a2b33] rounded-md rounded-tl-4xl rounded-bl-4xl items-end gap-0 px-3 sm:px-5">
                 <div className="relative">
                     <button 
                         className="text-neutral-500 pb-3 sm:pb-5 focus:border-none focus:outline-none focus:text-white duration-300 transition-all cursor-pointer"
@@ -139,9 +139,9 @@ const MessageBar = () => {
                     rows="1"
                 />
                 <button 
-                className="text-neutral-500 pb-3 sm:pb-5 focus:border-none focus:outline-none focus:text-white duration-300 transition-all cursor-pointer" 
+                className="text-neutral-500 pb-3.5 sm:pb-5 focus:border-none focus:outline-none focus:text-white duration-300 transition-all cursor-pointer" 
                 onClick={handleAttachmentClick}>
-                    <GrAttachment className="text-2xl"/>
+                    <GrAttachment className="text-xl sm:text-2xl"/>
                 </button>
                 <input type="file" className="hidden" ref={fileInputRef} onChange={handleAttachmentChange} />
             </div>

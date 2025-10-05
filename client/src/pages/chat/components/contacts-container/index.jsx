@@ -45,36 +45,42 @@ const ContactsContainer = () => {
   }, [setChannels, setDirectMessagesContacts]);
 
   return(
-    <div className="relative md:w-[35vw] lg:w-[30vw] xl:w-[30vw] bg-[#1b1c24] border-r-2 border-[#2f303b] w-full">
+    <div className="relative md:w-[35vw] lg:w-[30vw] xl:w-[30vw] bg-[#1b1c24] border-r-1 border-[#2f303b] w-full flex flex-col h-screen">
         <div className="pt-0 sm:pt-3">
             <Logo />
         </div>
-        <Tabs defaultValue="channel" className="w-full">
-          <TabsList className="bg-transparent rounded-none w-full mb-3 px-5">
+        <Tabs defaultValue="channel" className="w-full flex-1 flex flex-col min-h-0">
+          <TabsList className="bg-transparent rounded-none w-full mb-2 sm:mb-1 px-5">
             <TabsTrigger value="channel"
             className="data-[state=active]:bg-transparent text-sm sm:text-md text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-white data-[state=active]:font-bold data-[state=active]:border-b-white/80 p-5 cursor-pointer transition-all duration-300">Groups</TabsTrigger>
             <TabsTrigger value="dm" 
             className="data-[state=active]:bg-transparent text-sm sm:text-md text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-white data-[state=active]:font-bold data-[state=active]:border-b-white/80 p-5 cursor-pointer transition-all duration-300">DM</TabsTrigger>
           </TabsList>
-          <TabsContent value="dm" className="flex flex-col">
-            <div className="my-5">
+          <TabsContent value="dm" className="flex-1 flex flex-col min-h-0 mt-0">
+            <div className="my-5 flex flex-col flex-1">
               <div className="flex items-center justify-between pr-7 sm:pr-10">
                   <Title text="Direct Messages" />
                   <NewDM />
               </div>
-              <div className="max-h-[38vh] overflow-y-auto scrollbar-hidden">
-                <ContactList contacts={directMessagesContacts} />
+              <div 
+                  className="overflow-y-auto custom-scrollbar"
+                  style={{ height: 'calc(100vh - 170px - 4rem)' }}
+              >
+                  <ContactList contacts={directMessagesContacts} />
               </div>
             </div>
           </TabsContent>
-          <TabsContent value="channel" className="flex flex-col">
-            <div className="my-5">
+          <TabsContent value="channel" className="flex-1 flex flex-col min-h-0">
+            <div className="my-5 flex flex-col flex-1">
               <div className="flex items-center justify-between pr-7 sm:pr-10">
                   <Title text="Channels" />
                   <CreateChannel />
               </div>
-              <div className="max-h-[38vh] overflow-y-auto scrollbar-hidden">
-                <ContactList contacts={channels} isChannel={true} />
+              <div 
+                  className="overflow-y-auto custom-scrollbar"
+                  style={{ height: 'calc(100vh - 170px - 4rem)' }}
+              >
+                  <ContactList contacts={channels} isChannel={true} />                
               </div>
             </div>
           </TabsContent>

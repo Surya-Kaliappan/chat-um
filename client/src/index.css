@@ -126,3 +126,38 @@
   font-weight: 500;
   font-style: normal;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Width of the entire scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Color of the tracking area */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #4a4a4a;    /* Color of the scroll thumb */
+  border-radius: 10px;       /* Roundness of the scroll thumb */
+  border: 2px solid transparent; /* Creates padding around scroll thumb */
+  background-clip: content-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #6a6a6a; /* Color of the thumb on hover */
+  
+}
+
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: auto;
+  scrollbar-color: #4a4a4a transparent;
+}

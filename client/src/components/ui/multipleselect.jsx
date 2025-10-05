@@ -264,7 +264,7 @@ const MultipleSelector = React.forwardRef(
             inputRef.current?.focus();
           }}
         >
-          <div className="flex flex-wrap gap-3 max-h-[150px] overflow-y-auto overflow-x-hidden">
+          <div className="flex flex-wrap gap-3 max-h-[150px] overflow-y-auto overflow-x-hidden cutsom-scrollbar">
             {selected.map((option) => {
               return (
                 <Badge
