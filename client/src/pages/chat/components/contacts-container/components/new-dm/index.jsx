@@ -38,7 +38,7 @@ const NewDM = () => {
                 console.log({error});
             }
         };
-        searchContacts(searchName);
+        searchContacts(searchName.trim());
     }, [deBouncedTerm]);
 
     
@@ -76,7 +76,7 @@ const NewDM = () => {
                             placeholder="Search Contacts"
                             className="rounded-lg p-6 bg-[#2c2e3b] border-none"
                             value={searchName}
-                            onChange={(e) => setSearchName(e.target.value.trim())}
+                            onChange={(e) => setSearchName(e.target.value)}
                         />
                     </div>
                     { searchedContacts.length > 0 && (

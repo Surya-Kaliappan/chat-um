@@ -67,6 +67,20 @@ const MessageContainer = () => {
         return imageRegex.test(filePath);
     };
 
+    const formatDate = (date) => {
+        const today = moment().startOf('day');
+        const yesterday = moment().subtract(1, 'days').startOf('day');
+        const messageDate = moment(date).startOf('day');
+
+        if (messageDate.isSame(today, 'day')) {
+            return "Today";
+        } else if (messageDate.isSame(yesterday, 'day')) {
+            return "Yesterday";
+        } else {
+            return moment(date).format("MMMM D, YYYY");
+        }
+    };
+
     const renderMessages = () => {
         let lastDate = null;
         return selectedChatMessages.map((message, index) => {
@@ -75,8 +89,9 @@ const MessageContainer = () => {
             lastDate = messageDate;
             return (
                 <div key={index}>
-                    {showDate && (<div className="text-center text-gray-500 my-2 mb-1 sm:mb-10 mt-5 sm:mt-10">
-                        {moment(message.timestamp).format("LL")}</div>
+                    {showDate && (<div className="text-center text-gray-300 my-2 mb-1 sm:mb-10 mt-5 sm:mt-10">
+                        {/* {moment(message.timestamp).format("LL")}</div> */}
+                        {formatDate(message.timestamp)}</div>
                     )}
                     {selectedChatType === "contact" && (renderDMMessages(message))}
                     {selectedChatType === "channel" && (renderChannelMessages(message))}
@@ -114,13 +129,21 @@ const MessageContainer = () => {
         return(
             <div className={`${message.sender === selectedChatData._id ? "text-left":"text-right"}`}>
                 {message.messageType === "text" && (
-                    <div className={`${message.sender !== selectedChatData._id ? "bg-[#0c6aeb]/30 text-white/90 border-[#0c6aeb]/80 text-left rounded-bl-md" : "bg-[#f59c0d]/30 text-white/80 border-[#f59c0d]/80 rounded-br-md"} text-sm sm:text-[16px] border inline-block px-3 py-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-1 sm:ml-2 md:ml-3 max-w-[80%] sm:max-w-[45%] break-words whitespace-pre-line`}>
+                    <div className={`${message.sender !== selectedChatData._id 
+                    ? "bg-[#0c6aeb]/30 text-white/90 border-[#0c6aeb]/80 text-left rounded-bl-md" 
+                    : "bg-[#f59c0d]/30 text-white/80 border-[#f59c0d]/80 rounded-br-md"} 
+                    text-sm sm:text-[16px] border inline-block px-3 py-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-1 sm:ml-2 md:ml-3 mr-0 sm:mr-1 md:mr-3 max-w-[80%] sm:max-w-[45%] break-words whitespace-pre-line`
+                    }>
                         {message.content}
                     </div>
                 )}
                 {
                     message.messageType === "file" && (
-                    <div className={`${message.sender !== selectedChatData._id ? "bg-[#0c6aeb]/30 text-[#0c6aeb]/90 border-[#0c6aeb]/50 text-left rounded-bl-md" : "bg-[#f59c0d]/30 text-white/80 border-[#f59c0d]/80 rounded-br-md"} border inline-block p-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-1 sm:ml-2 md:ml-3 md-2 max-w-[80%] break-words`}>
+                    <div className={`${message.sender !== selectedChatData._id 
+                    ? "bg-[#0c6aeb]/30 text-[#0c6aeb]/90 border-[#0c6aeb]/50 text-left rounded-bl-md" 
+                    : "bg-[#f59c0d]/30 text-white/80 border-[#f59c0d]/80 rounded-br-md"} 
+                    border inline-block p-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-1 sm:ml-2 md:ml-3 mr-0 sm:mr-1 md:mr-3 md-2 max-w-[80%] break-words`
+                    }>
                         {checkIfImage(message.fileUrl) ? 
                         (<div className="cursor-pointer" 
                         onClick={() => {
@@ -142,7 +165,7 @@ const MessageContainer = () => {
                         </div>)}
                     </div>
                 )}
-                <div className="text-[10px] sm:text-[12px] pr-1 text-white/60 ml-2 sm:ml-3 md:ml-4 mt-1/2 sm:mt-1">
+                <div className="text-[10px] sm:text-[12px] pr-1 sm:pr-2 md:pr-4 text-white/60 ml-2 sm:ml-3 md:ml-4 mt-1/2 sm:mt-1">
                     {moment(message.timestamp).format("LT")}
                 </div>
             </div>

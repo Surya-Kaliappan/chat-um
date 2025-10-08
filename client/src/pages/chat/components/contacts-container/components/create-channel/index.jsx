@@ -45,7 +45,7 @@ const CreateChannel = () => {
                 console.log({error});
             }
         }
-        searchChannel(searchName);
+        searchChannel(searchName.trim());
     }, [deBouncedTerm]);
 
     useEffect(() => {
@@ -114,7 +114,7 @@ const CreateChannel = () => {
 
     return (
         <>
-            <div className="flex flex-rows gap-5">
+            <div className="flex flex-rows gap-6 sm:gap-8">
                 <Tooltip>
                     <TooltipTrigger>
                         <FaPlus className="text-neutral-400 font-light text-opacity-90 text-start hover:text-neutral-100 cursor-pointer transition-all duration-300" 
@@ -186,7 +186,7 @@ const CreateChannel = () => {
                             placeholder="Search Channel"
                             className="rounded-lg p-6 bg-[#2c2e3b] border-none"
                             value={searchName}
-                            onChange={(e) => setSearchName(e.target.value.trim())}
+                            onChange={(e) => setSearchName(e.target.value)}
                         />
                     </div>
                     { searchedChannels.length > 0 && (

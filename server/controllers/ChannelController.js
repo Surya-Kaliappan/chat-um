@@ -67,6 +67,9 @@ export const getUserChannels = async (request, response, next) => {
         const userId = new mongoose.Types.ObjectId(request.userId);  // store the data as ObjectId type
         const channels = await Channel.find({
             $or: [{admin: userId}, {members: userId}],
+        }).select("_id name admin members").populate({
+            path: "admin",
+            select: "email"
         }).sort({updatedAt: -1}); // sort in descending order of time
 
         return response.status(201).json({channels});

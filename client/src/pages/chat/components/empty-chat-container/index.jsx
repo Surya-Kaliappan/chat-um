@@ -10,7 +10,7 @@ const EmptyChatContaienr = () => {
                 width={300}
                 options={animationDefaultOptions}
             />
-            <div className="text-capcity-80 text-white flex flex-col gap-5 items-center lg:text-4xl text-3xl transition-all duration-300 text-center">
+            <div className="text-white flex flex-col gap-5 items-center lg:text-4xl text-3xl transition-all duration-300 text-center">
                 <h3 className="poppins-medium">
                     Hi! Welcome to
                     <span className="text-[#0c6aeb] font-semibold"> Chat </span>

@@ -6,6 +6,8 @@ import Chat from './pages/chat';
 import { useAppStore } from './store';
 import { apiClient } from './lib/api-client';
 import { GET_USER_INFO } from './utils/constants';
+import Lottie from 'react-lottie';
+import { animationDefaultOptions } from './lib/utils';
 
 const PrivateRoute = ({children}) => {
   const {userInfo} = useAppStore();
@@ -49,7 +51,23 @@ const App = () => {
   }, [userInfo, setUserInfo]);
 
   if(loading) {
-    return <div>Loading...</div>
+    return (
+      <div className="bg-[#1c1d25] w-[100vw] flex flex-col items-center justify-center h-[100vh] duration-1000 transition-all">
+            <div className='w-52 h-52 md:w-72 md:h-72'>
+              <Lottie
+                  isClickToPauseDisabled={true}
+                  height="100%"
+                  width="100%"
+                  options={animationDefaultOptions}
+              />
+            </div>
+            <div className="text-white flex flex-col gap-5 items-center lg:text-4xl text-3xl transition-all duration-300 text-center">
+                <h3 className="poppins-medium">
+                    Loading..
+                </h3>
+            </div>
+        </div>
+    );
   }
 
   return (
