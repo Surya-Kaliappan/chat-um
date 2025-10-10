@@ -15,18 +15,11 @@ const app = express();
 const port = process.env.PORT || 1234;
 const databaseURL = process.env.DATABASE_URL;
 
-console.log(`CORS allowed origin is set to: ${process.env.ORIGIN}`);
-
 app.use(cors({
     origin: process.env.ORIGIN, // get request from this link
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],  // REST Operations
     credentials: true,  // to enable cookies
 }));
-
-app.use((req, res, next) => {
-    console.log(`[Request Received] Method: ${req.method}, Path: ${req.path}, Origin: ${req.headers.origin}`);
-    next();
-});
 
 app.use("/uploads/profiles", express.static("uploads/profiles"));
 app.use("/uploads/files", express.static("uploads/files"));
