@@ -41,7 +41,7 @@ const ChatHeader = () => {
                     </div>
                 </div>
             </div>
-            {selectedChatType === "channel" && selectedChatData.admin[0] === userInfo.id && <EditChannel />}
+            {selectedChatType === "channel" && selectedChatData.admin[0]._id === userInfo.id && <EditChannel />}
         </div>
     );
 };
