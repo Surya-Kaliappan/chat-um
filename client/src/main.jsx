@@ -5,7 +5,7 @@ import { Toaster } from './components/ui/sonner.jsx';
 import { SocketProvider } from './context/SocketContext';
 import { HashRouter } from 'react-router-dom';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById('root')).render(
 
   <HashRouter>
     <SocketProvider>
