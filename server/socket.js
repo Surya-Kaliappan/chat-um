@@ -1,6 +1,7 @@
 import { Server as SocketIOServer } from "socket.io"
 import Message from "./models/MessagesModel.js";
 import Channel from "./models/ChannelModel.js";
+import { DateTime } from "luxon";
 
 const setupSocket = (server) => {
     const io = new SocketIOServer(server, {  // Setting Socket server with parameters
@@ -56,12 +57,14 @@ const setupSocket = (server) => {
             return ;
         }
 
+        const localTimeNow = DateTime.local().setZone("Asia/Kolkata").toJSDate();
+
         const createdMessage = await Message.create({
             sender,
             recipient: null,
             content,
             messageType,
-            timestamp: new Date(),
+            timestamp: localTimeNow,
             fileUrl,
         });
 
