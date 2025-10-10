@@ -132,7 +132,7 @@ const MessageContainer = () => {
                     <div className={`${message.sender !== selectedChatData._id 
                     ? "bg-[#0c6aeb]/30 text-white/90 border-[#0c6aeb]/80 text-left rounded-bl-md" 
                     : "bg-[#f59c0d]/30 text-white/80 border-[#f59c0d]/80 rounded-br-md"} 
-                    text-sm sm:text-[16px] border inline-block px-3 py-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-1 sm:ml-2 md:ml-3 mr-0 sm:mr-1 md:mr-3 max-w-[80%] sm:max-w-[45%] break-words whitespace-pre-line`
+                    text-sm font-normal sm:text-[16px] border inline-block px-3 py-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-1 sm:ml-2 md:ml-3 mr-0 sm:mr-1 md:mr-3 max-w-[80%] sm:max-w-[45%] break-words whitespace-pre-line`
                     }>
                         {message.content}
                     </div>
@@ -142,7 +142,7 @@ const MessageContainer = () => {
                     <div className={`${message.sender !== selectedChatData._id 
                     ? "bg-[#0c6aeb]/30 text-[#0c6aeb]/90 border-[#0c6aeb]/50 text-left rounded-bl-md" 
                     : "bg-[#f59c0d]/30 text-white/80 border-[#f59c0d]/80 rounded-br-md"} 
-                    border inline-block p-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-1 sm:ml-2 md:ml-3 mr-0 sm:mr-1 md:mr-3 md-2 max-w-[80%] break-words`
+                    border font-normal inline-block p-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-1 sm:ml-2 md:ml-3 mr-0 sm:mr-1 md:mr-3 md-2 max-w-[80%] break-words`
                     }>
                         {checkIfImage(message.fileUrl) ? 
                         (<div className="cursor-pointer" 
@@ -224,7 +224,7 @@ const MessageContainer = () => {
                         <div className={`${message.sender._id === userInfo.id 
                             ? "bg-[#0c6aeb]/30 text-white/90 border-[#0c6aeb]/80 text-left rounded-bl-md" 
                             : "bg-[#2a2b33]/5 text-white/80 border-[#ffffff]/20 rounded-br-md"} 
-                            text-sm sm:text-[16px] border inline-block px-5 py-2 rounded-tl-md rounded-tr-md my-1 mt-2 ml-6 max-w-[80%] sm:max-w-[45%] break-words whitespace-pre-line`}>
+                            text-sm font-normal sm:text-[16px] border inline-block px-3 py-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-1 sm:ml-2 md:ml-3 mr-0 sm:mr-1 md:mr-3 max-w-[80%] sm:max-w-[45%] break-words whitespace-pre-line`}>
                                 {message.content}
                         </div>
                 )}
@@ -232,7 +232,7 @@ const MessageContainer = () => {
                     <div className={`${message.sender._id === userInfo.id 
                         ? "bg-[#0c6aeb]/30 text-white/90 border-[#0c6aeb]/80 text-left rounded-bl-md" 
                         : "bg-[#2a2b33]/5 text-white/80 border-[#ffffff]/20 rounded-br-md"} 
-                        border inline-block p-2 rounded-tl-md rounded-tr-md my-1 mt-2 ml-6 max-w-[80%] break-words`}
+                        border font-normal inline-block p-2 rounded-tl-md rounded-tr-md my-1 mt-3 ml-1 sm:ml-2 md:ml-3 mr-0 sm:mr-1 md:mr-3 md-2 max-w-[80%] break-words`}
                     >
                         {checkIfImage(message.fileUrl) ? 
                         (<div className="cursor-pointer" 
