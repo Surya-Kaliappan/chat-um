@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Auth from './pages/auth';
 import Profile from './pages/profile';
 import Chat from './pages/chat';
@@ -71,7 +71,6 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter>
       <Routes> 
         <Route path="/auth" element={<AuthRoute><Auth /></AuthRoute>} />
         <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
@@ -79,7 +78,6 @@ const App = () => {
         
         <Route path="*" element={<Navigate to="/auth" />} />
       </Routes>
-    </BrowserRouter>
   );
 }
 
