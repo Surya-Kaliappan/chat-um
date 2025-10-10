@@ -19,6 +19,9 @@ export const signup = async (request, response, next) => {
         const user = await User.create({email, password: hashedPassword});
         response.cookie("jwt", createToken(email, user.id), {   // adding cookie to response with token
             maxAge, 
+            secure: true,
+            sameSite: 'None',
+            httpOnly: true,
         });
         return response.status(201).json({
             user: {
@@ -168,7 +171,12 @@ export const removeProfileImage = async (request, response, next) => {
 
 export const logout = async (request, response, next) => {
     try{
-        response.cookie("jwt", "", {maxAge: 1});  // update the cookie to expire in 1ms
+        response.cookie("jwt", "", {
+            maxAge: 1,
+            secure: true,
+            sameSite: 'None',
+            httpOnly: true,
+        });  // update the cookie to expire in 1ms
         return response.status(200).send("Logout Successfully");
     } catch (error) {
         return response.status(500).send("Internal Server Error");
