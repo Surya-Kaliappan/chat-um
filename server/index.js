@@ -33,7 +33,7 @@ app.use("/api/messages", messagesRoutes);
 app.use("/api/channel", channelRoutes);
 
 const server = app.listen(port, () => {
-    console.log(`Server is running.. http://localhost:${port}`);
+    console.log(`Server is running..`);
 });
 
 setupSocket(server);
