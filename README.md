@@ -6,6 +6,10 @@ This project is built with the MERN stack (MongoDB, Express, React, Node.js) and
 
 ---
 
+**Live Link:** [https://surya-kaliappan.github.io/chat-um](https://surya-kaliappan.github.io/chat-um)
+
+---
+
 ## ✨ Key Features
 
 * **Dual Chat Modes:** Engage in private **Direct Messaging (DM)** or join public **Group Chats**.
