@@ -3,10 +3,13 @@ import User from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 import { renameSync, unlinkSync } from "fs";
 
-const maxAge = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);  // 3 Days of Expire
+const EXPIRY_DAYS = 3;
+const EXPIRY_SECONDS = EXPIRY_DAYS * 24 * 60 * 60; // 259,200 seconds (for JWT)
+const EXPIRY_MILLISECONDS = EXPIRY_SECONDS * 1000;
+const cookieExpiryDate = new Date(Date.now() + EXPIRY_MILLISECONDS);
 
 const createToken = (email, userId) => {
-    return jwt.sign({email, userId}, process.env.JWT_KEY, {expiresIn: maxAge});  // Creating Token
+    return jwt.sign({email, userId}, process.env.JWT_KEY, {expiresIn: EXPIRY_SECONDS});  // Creating Token
 }
 
 export const signup = async (request, response, next) => {
@@ -18,7 +21,7 @@ export const signup = async (request, response, next) => {
         const hashedPassword = await bcrypt.hash(password, 10);  // Hashing password with 10 rounds
         const user = await User.create({email, password: hashedPassword});
         response.cookie("jwt", createToken(email, user.id), {   // adding cookie to response with token
-            maxAge, 
+            cookieExpiryDate, 
             secure: true,
             sameSite: 'None',
             httpOnly: true,
@@ -52,7 +55,7 @@ export const login = async (request, response, next) => {
             return response.status(400).send("Password is incorrect.");
         }
         response.cookie("jwt", createToken(email, user.id), {  // Creating Cookie with token as same as Signup
-            maxAge,
+            cookieExpiryDate,
             secure: true,
             sameSite: 'None',
             httpOnly: true,
