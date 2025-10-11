@@ -18,6 +18,10 @@ export const signup = async (request, response, next) => {
         if(!email || !password){
             return response.status(400).send("Email and Password is required.");
         }
+        const checkAlreadyexists = await User.find({email: email});
+        if(checkAlreadyexists !== null){
+            return response.status(409).send("User Already Exists..");
+        }
         const hashedPassword = await bcrypt.hash(password, 10);  // Hashing password with 10 rounds
         const user = await User.create({email, password: hashedPassword});
         response.cookie("jwt", createToken(email, user.id), {   // adding cookie to response with token

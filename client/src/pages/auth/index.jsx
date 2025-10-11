@@ -58,11 +58,16 @@ const Auth = () => {
                     else navigate("/profile");
                 }
             } catch (error) {
-                console.log(error.code);
                 if(error.code === "ERR_NETWORK"){
                     toast.error("Can't reach Server");
-                }else{
-                toast.error("Invalid Credentail");
+                } else if(error.status === 404){
+                    toast.error("Email not found");
+                } else if(error.status === 400){
+                    toast.error("Invalid Credential");
+                } else if(error.status === 500){
+                    toast.error("Server Error");
+                } else {
+                    toast.error(error.code);
                 }
             }
         }
@@ -70,13 +75,27 @@ const Auth = () => {
 
     const handleSignup = async () => {
         if(validateSignup()) {
-            const response = await apiClient.post(SIGNUP_ROUTE, 
-                {email, password}, 
-                {withCredentials: true}
-            );
-            if(response.status === 201){
-                setUserInfo(response.data.user);
-                navigate("/profile");
+            try{
+                const response = await apiClient.post(SIGNUP_ROUTE, 
+                    {email, password}, 
+                    {withCredentials: true}
+                );
+                if(response.status === 409){
+                    toast.error("User Already Exists..");
+                }
+                else if(response.status === 201){
+                    setUserInfo(response.data.user);
+                    navigate("/profile");
+                }
+            } catch (error) {
+                console.log({error});
+                if(error.status === 409){
+                    toast.error("User Already Exists..");
+                } else if(error.status === 500){
+                    toast.error("Server Error");
+                } else {
+                    toast.error(error.code);
+                }
             }
         }
     };

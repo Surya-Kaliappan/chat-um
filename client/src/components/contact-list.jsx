@@ -22,7 +22,7 @@ const ContactList = ({contacts, isChannel = false}) => {
             {contacts.map((contact) => (
                 <div 
                 key={contact._id} 
-                className={`pl-7 py-3 transition-all text-sm sm:text-md duration-300 hover:bg-white/10 rounded-md cursor-pointer ${selectedChatData && selectedChatData._id === contact._id ? "bg-[#0c6aeb]/30 border-1 border-[#0c6aeb]/80 hover:bg-[#0c6aeb]/50":"hover-bg[#8417ff]"}`}
+                className={`px-2 sm:px-5 py-3 transition-all text-sm sm:text-md duration-300 hover:bg-white/10 rounded-md cursor-pointer ${selectedChatData && selectedChatData._id === contact._id ? "bg-[#0c6aeb]/30 border-1 border-[#0c6aeb]/80 hover:bg-[#0c6aeb]/50":"hover-bg[#8417ff]"}`}
                 onClick={() => handleClick(contact)}
                 >
                     <div className="flex gap-4 items-center justify-start text-neutral-300">

@@ -68,7 +68,7 @@ const NewDM = () => {
             <Dialog open={openNewContactModal} onOpenChange={setOpenNewContactModal}>
                 <DialogContent className="bg-[#181920] border-none text-white w-[400px] sm:w-[600px] h-auto min-h-[450px] sm:min-h-[500px] flex flex-col poppins-medium">
                     <DialogHeader>
-                        <DialogTitle>{searching ? 'Searching' : 'Search Contact'}</DialogTitle>
+                        <DialogTitle>Search Contacts</DialogTitle>
                     <DialogDescription>Direct Message</DialogDescription>
                     </DialogHeader>
                     <div>

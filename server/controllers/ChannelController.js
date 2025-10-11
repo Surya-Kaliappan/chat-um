@@ -18,13 +18,24 @@ export const createChannel = async (request, response, next) => {
         const validMembers = await User.find({_id:{$in:members}});  // checking the presence of all memebers in the database
         if(validMembers.length !== members.length){
             return response.status(400).send("Some members are not Valid users.");
-        } 
+        }
+
+        const isAlreadyCreated = await Channel.findOne({name: name});
+        if(isAlreadyCreated !== null){
+            return response.status(409).send("Channel Name already exists");
+        }
 
         const newChannel = new Channel({
             name, members, admin: userId,
         });
         await newChannel.save();
-        return response.status(201).json({channel: newChannel});
+        const channel = {
+            _id: newChannel._id,
+            admin: [{_id: admin._id, email: admin.email}],
+            members: newChannel.members,
+            name: newChannel.name,
+        };
+        return response.status(201).json({channel: channel});
     } catch (error) {
         console.log({error});
         return response.status(500).send("Internal Server Error");
@@ -114,11 +125,67 @@ export const searchChannels = async (request, response, next) => {
 
         const regex = new RegExp(sanitizedSearchTerm, "i");
 
-        const channels = await Channel.find({name: regex}).select("_id name admin").populate({
-            path: "admin",
-            select: "_id email firstName lastName"
-        });
+        // const channels = await Channel.find({name: regex}).select("_id name admin").populate({
+        //     path: "admin",
+        //     select: "_id email firstName lastName"
+        // });
 
+        const channels = await Channel.aggregate([
+            {  // search for users whose email matches the search
+                $lookup: {
+                    from: "users",
+                    localField: "admin",
+                    foreignField: "_id",
+                    as: "adminDetails"
+                },
+            },
+            // add virtual field to check for matches in channel name or admin email
+            {
+                $addFields: {
+                    // check if the channel name matches the regex 
+                    nameMatches: {$regexMatch: {input: "$name", regex: regex}},
+                    // check if ANY admin's email matches the regex
+                    adminEmailMatches: {
+                        $gt: [{
+                            $size: {
+                                $filter: {
+                                    input: "$adminDetails",
+                                    as: "admin",
+                                    // check if the admin's email matches the regex
+                                    cond: {$regexMatch: {input: "$$admin.email", regex: regex}}
+                                },
+                            }
+                        }, 0],
+                    }
+                }
+            },
+            // keep channels where either name or admin email matches
+            {
+                $match: {
+                    $or: [
+                        {nameMatches: true},
+                        {adminEmailMatches: true}
+                    ],
+                }
+            },
+            // clean up the output and format the admin field
+            {
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    admin: {$map: {
+                        input: "$adminDetails",
+                        as: "admin",
+                        in: {
+                            _id: "$$admin._id",
+                            email: "$$admin.email",
+                            firstName: "$$admin.firstName",
+                            lastName: "$$admin.lastName"
+                        }
+                    }},
+                }
+            }
+        ]);
         return response.status(200).json({channels});
     } catch (error) {
         console.log({error});

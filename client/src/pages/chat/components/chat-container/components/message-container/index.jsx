@@ -150,7 +150,7 @@ const MessageContainer = () => {
                             setShowImage(true);
                             setImageURL(message.fileUrl);
                         }}>
-                            <img src={`${HOST}/${message.fileUrl}`} height={300} width={300} />
+                            <img src={`${HOST}/${message.fileUrl}`} alt={message.fileUrl.split("/").pop()} width={300} />
                         </div>) : (<div className="flex items-center justify-center gap-4">
                             <span className="text-white/80 text-md sm:text-3xl bg-black/20 rounded-full p-3">
                                 <MdFolderZip />
@@ -240,7 +240,7 @@ const MessageContainer = () => {
                             setShowImage(true);
                             setImageURL(message.fileUrl);
                         }}>
-                            <img src={`${HOST}/${message.fileUrl}`} width={250} />
+                            <img src={`${HOST}/${message.fileUrl}`} alt={message.fileUrl.split("/").pop()} width={300} />
                         </div>) : (<div className="flex items-center justify-center gap-4">
                             <span className="text-white/80 text-md sm:text-3xl bg-black/20 rounded-full p-3">
                                 <MdFolderZip />

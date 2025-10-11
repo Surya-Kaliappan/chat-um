@@ -45,7 +45,7 @@ const ContactsContainer = () => {
   }, [setChannels, setDirectMessagesContacts]);
 
   return(
-    <div className="relative md:w-[35vw] lg:w-[30vw] xl:w-[30vw] bg-[#1b1c24] border-r-5 border-[#2f303b] w-full flex flex-col h-screen">
+    <div className="relative md:w-[35vw] lg:w-[30vw] xl:w-[30vw] bg-[#1b1c24] border-r-0 sm:border-r-5 border-[#2f303b] w-full flex flex-col h-screen">
         <div className="pt-0 sm:pt-3">
             <Logo />
         </div>
@@ -56,9 +56,9 @@ const ContactsContainer = () => {
             <TabsTrigger value="dm" 
             className="data-[state=active]:bg-transparent text-sm sm:text-md text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-white data-[state=active]:font-bold data-[state=active]:border-b-white/80 p-5 cursor-pointer transition-all duration-300">DM</TabsTrigger>
           </TabsList>
-          <TabsContent value="dm" className="flex-1 flex flex-col min-h-0 mt-0">
-            <div className="my-5 flex flex-col flex-1 px-3">
-              <div className="flex items-center justify-between pr-7 sm:pr-10">
+          <TabsContent value="dm" className="flex-1 flex flex-col min-h-0">
+            <div className="my-3 flex flex-col flex-1 px-3">
+              <div className="flex items-center justify-between pr-7 sm:pr-10 md:pr-8">
                   <Title text="Direct Messages" />
                   <NewDM />
               </div>
@@ -71,7 +71,7 @@ const ContactsContainer = () => {
             </div>
           </TabsContent>
           <TabsContent value="channel" className="flex-1 flex flex-col min-h-0">
-            <div className="my-5 flex flex-col flex-1 px-3">
+            <div className="my-3 flex flex-col flex-1 px-3">
               <div className="flex items-center justify-between pr-7 sm:pr-10 md:pr-8">
                   <Title text="Channels" />
                   <CreateChannel />

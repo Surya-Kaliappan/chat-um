@@ -79,8 +79,14 @@ const CreateChannel = () => {
                 toast("Please Fill the Required Details")
             }
         } catch (error) {
-            toast("Failed to Create Channel");
             console.log({error});
+            if(error.status===409){
+                toast.error("Channel Already created..");
+            } else if(error.status === 500){
+                toast.error("Server Error");
+            } else {
+                toast.error(error.code);
+            }
         }
     }
 
@@ -178,8 +184,8 @@ const CreateChannel = () => {
             <Dialog open={searchChannelModal} onOpenChange={setSearchChannelModal}>
                 <DialogContent className="bg-[#181920] border-none text-white w-[400px] sm:w-[600px] h-auto min-h-[450px] sm:min-h-[500px] flex flex-col poppins-medium">
                     <DialogHeader>
-                        <DialogTitle>{searching ? 'Searching' : 'Search Channel'}</DialogTitle>
-                        <DialogDescription>Channel</DialogDescription>
+                        <DialogTitle>Search Channel</DialogTitle>
+                        <DialogDescription>{searching ? 'Searching': searchName && searchedChannels!==0 ? `Result` : 'Channel'}</DialogDescription>
                     </DialogHeader>
                     <div>
                         <Input

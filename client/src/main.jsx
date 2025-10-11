@@ -7,12 +7,12 @@ import { SocketProvider } from './context/SocketContext';
 import { HashRouter } from 'react-router-dom';
 
 createRoot(document.getElementById('root')).render(
-  // <StrictMode>
+  <StrictMode>
   <HashRouter>
     <SocketProvider>
       <App />
       <Toaster closeButton position="top-center" />
     </SocketProvider>
   </HashRouter>
-  // </StrictMode>,
+  </StrictMode>,
 );
