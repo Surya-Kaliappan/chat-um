@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Channel from "../models/ChannelModel.js";
 import User from "../models/UserModel.js";
+import channel from "../models/ChannelModel.js";
 
 
 export const createChannel = async (request, response, next) => {
@@ -64,8 +65,14 @@ export const EditChannel = async (request, response, next) => {
             },
             { new: true, runValidators: true } // runValidators to check the errors in data and new as true for return the data
         );
-
-        return response.status(201).json({channel: channelData});
+        const channel = {
+            _id: channelData._id,
+            admin: [{_id: admin._id, email: admin.email}],
+            members: channelData.members,
+            name: channelData.name,
+        };
+        // console.log(channel);
+        return response.status(201).json({channel: channel});
 
     } catch (error) {
         console.log({error});
